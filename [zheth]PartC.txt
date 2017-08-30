@@ -1,0 +1,28 @@
+*************************************************
+Zachary Heth
+Professor Binsted
+Homework 3
+Part C Answers
+*************************************************
+
+Linear-Conflict Heuristic
+    This is an extenstion of the Manhattan Distance Heursitic.
+    Let's say we have 3 tiles, X Y G, all in the same line (row or column).
+    The goal state position for X is where G currently is.
+    Since Y is in the way of tile X, there must be at least an additional 2 moves to get X to G.
+    The heuristic is calculated for all numbered tiles, and then added to the regular Manhattan Distance Heuristic.
+    This gives a number closer to the actual cost, but is still an underestimate, which means it is admissable.
+
+Performance Comparison
+    Manhattan Distance
+      This heuristic is able to solve the same puzzles in less time than the default heuristic.
+      It evaluated about 1/5 the number of nodes than the default heuristic did, in the hard example.
+      It is more informed than the default heuristic because it gives a more accurate lower bound on the number of moves it will take to solve the puzzle.
+      The default heuristic only gives how many tiles are out of place, and says nothing about how many moves it might take to reach the goal state
+    Linear-Conflict
+      It significantly reduced the amount of time it took to solve the 8-puzzles.
+      When solving the hard puzzle, it evaluated about 1/2 the number of nodes compared to the Manhattan Distance,
+      and 1/9 of the number of nodes compared to the default heuristic. It is the fastest of the 3.
+      This makes sense because it is simply an improved version of the Manhattan Distance Heurisitc
+    For all 3 of my heuristics, testing an impossible puzzle resulted in a stack overflow.
+    With a depth of 20, the openlist grows far to huge to evaluate everything.

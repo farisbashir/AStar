@@ -1,0 +1,6 @@
+(load "A^Search")
+(load "Arith")
+(load "RiverCrossH")
+(load "GallonH")
+(load "8puzzleH")
+;(load "traceHw3")

@@ -1,0 +1,38 @@
+
+A* Search
+
+  4-tuple (state parentstate depth F(p))
+  Same as B/DFS (all the conditions), except the open list will be sorted using the priority queue
+    Add all the new nodes to the openlist
+    Run a sorting algorithm on it
+  OR
+    Run a single interation insertion sort after adding it to the front
+
+
+  Heuristic function
+  F(p) = cost(p) + heuristic(p)
+
+  Cost - For traversing from one node to another i.e arc length/cost
+        cost(n) - cost from n to all nearby neighbors (returns the list of neighbors with their cost)
+
+        cost(p) - for the entire path from n to goal
+          It will basically be irrelavent here because each decision is 1 "cost"
+          Cost must be positive to avoid infinite loops? (nonzero)
+  Heuristic - Information, How promising a node is (example, how many "things" are in the correct position")
+          h(p) - Underestimate of the lowest-cost path from n to goal
+                  Important that it is always an underestimation or equal to the cost
+                  An overestimation means that path will not be searched
+              h(p) = h(<h(n1) + h(n2) +...h(ngoal)>)
+
+        How can you estimate the cost of the path if the that's what we are trying to find
+        THAT" EXACTLY WHAT A HEURISTIC IS: i.e you have to figure it out i guess...
+
+  Default Heuristic
+      Number of objects NOT in the correct position
+      because a lower estimate is better than a greater one
+      Example: 8-puzzle
+                The number of tiles NOT in their goal state
+                which signifies how many moves are needed AT LEAST to complete the puzzle
+
+  Open List
+      Works like a priority queue where the lowest F(p) values move to the front
