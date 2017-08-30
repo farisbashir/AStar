@@ -1,0 +1,160 @@
+ICS 361 Assignment 2: State Space Representations and Search (100 pts)
+Your task here is to implement general-purpose (i.e. not puzzle-specific)
+versions of the breadth-first and depth-first search strategies in LISP, and
+apply them to three different puzzles.
+
+Part A (20 points)
+Implement versions of both breadth-first and depth-first search strategies,
+using *open* and *closed* lists. Your search code must be independent of the application problem
+(i.e. you should use the same search code for all three problems in Part B, although you may use
+a depth limit of twenty on the 8-puzzle problem). You are welcome to start with existing code you
+find online, but you must cite your source, indicate clearly which code is yours and which is from
+ someone else, and write all of the comments in your own words.
+Add printing functions to your searches so that the first node on the open list is printed in each
+ iteration. Also add printing functions so that when the goal is reached, the length of the open
+ and closed lists as well as the solution path is printed.
+This example (from Nancy Reed) shows depth-, breadth-, and best-first (not on this assignment)
+searches applied to the Missionaries and Cannibals river-crossing problem.
+Nodes (problem independent) are represented by a 3-tuple consisting of a state,
+the node’s parent state, and the depth of the node in the search tree. States (problem specific)
+are represented by a 3-tuple with the number of Ms then number of Cs on the start side and the
+3rd part of the state shows the side where the boat is currently located. Both Ms and Cs can
+paddle the boat. The maximum capacity of the boat is two and the minimum is one (at least one
+M or C must be in the boat to paddle). The goal is to move all Ms and Cs to the opposite side
+while making sure that Cs do not outnumber Ms on either side of the river. If that should happen,
+Ms would be eaten (not a legal state).
+
+Part B (60 points)
+Create state space representations of the following problems for use with the search
+strategies you implemented above:
+
+(15 pt) Farmer, Wolf, Goat and Cabbage (http://www.mathsisfun.com/puzzles/farmer-crosses-river.html)
+(15 pt) Water Jugs (http://www.math.tamu.edu/~dallen/hollywood/diehard/diehard.htm)
+(30 pt) 8 puzzle (http://www.tilepuzzles.com/default.asp?p=12)
+FWGC and Water Jugs puzzles have fixed beginning and ending states. The 8-puzzle,
+however can start in any configuration, and has two commonly-defined goal states
+(but any state could be defined as the goal state).
+To solve any 8-puzzle problem, you must be able to easily specify the start and goal
+states (e.g. read them in from a file, load lisp definitions, or enter them from the console).
+For your transcript, use the following start and goal states:
+
+Start:
+
+-------
+|2|8|3|
+-------
+|1|6|4|
+-------
+|7| |5|
+-------
+Goal:
+
+-------
+|1|2|3|
+-------
+|8| |4|
+-------
+|7|6|5|
+-------
+
+Create meaningful comments in all files with a description of the problem and
+descriptions of each of the variables and functions used in the file.
+Load your code in to Lisp and save the output of solving each of the puzzles
+[UHUnixName]2OUT.txt (add A, B, C if more than one file).
+
+Note: you will use the code from this assignment for the next assignment.
+
+Part C (20 points)
+For each puzzle:
+
+Describe a successful strategy for solving the puzzle, in clearly written English (a paragraph or two for each puzzle).
+How many different states are possible in the search space for each puzzle?
+Turn in the following (all via Laulima):
+All code, appropriately commented.
+Transcripts of the solutions for each puzzle.
+A text file with the answers to Part C.
+
+3-tuple
+        current state,
+        parent state,
+        depth of the node in the search tree.
+
+>*start*    ;current state
+(3 3 W)
+
+>*goal*
+(0 0 E)
+
+>*moves*
+(1C-CROSSES 2C-CROSS 1C1M-CROSS 1M-CROSSES 2M-CROSS)
+
+>(depth-first *start* *goal* *moves*)
+1) first node on open = ((3 3 W) NIL 0)
+2) first node on open = ((2 3 E) (3 3 W) 1)
+3) first node on open = ((1 3 E) (3 3 W) 1)
+4) first node on open = ((2 3 W) (1 3 E) 2)
+5) first node on open = ((0 3 E) (2 3 W) 3)
+6) first node on open = ((1 3 W) (0 3 E) 4)
+7) first node on open = ((1 1 E) (1 3 W) 5)
+8) first node on open = ((2 2 W) (1 1 E) 6)
+9) first node on open = ((2 0 E) (2 2 W) 7)
+10) first node on open = ((3 0 W) (2 0 E) 8)
+11) first node on open = ((1 0 E) (3 0 W) 9)
+12) first node on open = ((2 0 W) (1 0 E) 10)
+13) first node on open = ((0 0 E) (2 0 W) 11)
+length of closed = 13
+length of open = 4
+solution path =
+((3 3 W) (1 3 E) (2 3 W) (0 3 E) (1 3 W) (1 1 E) (2 2 W) (2 0 E)
+ (3 0 W) (1 0 E) (2 0 W) (0 0 E))
+T
+
+>(best-first *start* *goal* *moves*)
+
+1) first on open = ((3 3 W) NIL 0 3)
+2) first on open = ((1 3 E) (3 3 W) 1 3)
+3) first on open = ((2 2 E) (3 3 W) 1 3)
+4) first on open = ((2 3 E) (3 3 W) 1 7/2)
+5) first on open = ((2 3 W) (1 3 E) 2 9/2)
+6) discarding first on open = ((2 3 W) (2 2 E) 2 9/2)
+7) first on open = ((0 3 E) (2 3 W) 3 9/2)
+8) first on open = ((1 3 W) (0 3 E) 4 6)
+9) first on open = ((1 1 E) (1 3 W) 5 6)
+10) first on open = ((2 2 W) (1 1 E) 6 8)
+11) first on open = ((2 0 E) (2 2 W) 7 8)
+12) first on open = ((3 0 W) (2 0 E) 8 19/2)
+13) first on open = ((1 0 E) (3 0 W) 9 19/2)
+14) first on open = ((2 0 W) (1 0 E) 10 11)
+15) first on open = ((1 1 W) (1 0 E) 10 11)
+16) first on open = ((0 0 E) (2 0 W) 11 11)
+length of closed = 15
+length of open = 2
+solution path =
+((3 3 W) (1 3 E) (2 3 W) (0 3 E) (1 3 W) (1 1 E) (2 2 W) (2 0 E)
+ (3 0 W) (1 0 E) (2 0 W) (0 0 E))
+T
+
+>(breadth-first *start* *goal* *moves*)
+1) first node on open = ((3 3 W) NIL 0)
+2) first node on open = ((2 3 E) (3 3 W) 1)
+3) first node on open = ((1 3 E) (3 3 W) 1)
+4) first node on open = ((2 2 E) (3 3 W) 1)
+5) first node on open = ((2 3 W) (1 3 E) 2)
+6) discarding first on open = ((2 3 W) (2 2 E) 2)
+7) first node on open = ((0 3 E) (2 3 W) 3)
+8) first node on open = ((1 3 W) (0 3 E) 4)
+9) first node on open = ((1 1 E) (1 3 W) 5)
+10) first node on open = ((2 2 W) (1 1 E) 6)
+11) first node on open = ((2 0 E) (2 2 W) 7)
+12) first node on open = ((3 0 W) (2 0 E) 8)
+13) first node on open = ((1 0 E) (3 0 W) 9)
+14) first node on open = ((2 0 W) (1 0 E) 10)
+15) first node on open = ((1 1 W) (1 0 E) 10)
+16) first node on open = ((0 0 E) (2 0 W) 11)
+length of closed = 15
+length of open = 2
+solution path =
+((3 3 W) (1 3 E) (2 3 W) (0 3 E) (1 3 W) (1 1 E) (2 2 W) (2 0 E)
+ (3 0 W) (1 0 E) (2 0 W) (0 0 E))
+T
+>

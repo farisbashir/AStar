@@ -1,0 +1,83 @@
+Farmer State Space
+
+    F - Farmer
+    W - Wolf
+    G - Goat
+    C - Cabbage
+    West - West side of river
+    East - East side of river
+
+    The problem can be simplified so that the farmer does not need to be part of the representation
+    For example the Wolf and Sheep can only be alone if the farmer takes the cabbage across, meaning
+    any time the state (W C $) is found, that is a losing scenario. It doesn't matter where the farmer is
+    There is no way for the farmer to come back and make that scenario plausible
+
+    All possible scenarios are as follows
+
+    (F W G C)
+    (F W G $)
+    (F $ G C)
+    (F W $ C)
+    (F $ $ C)  LOSE
+    (F $ G $)
+    (F W $ $)  LOSE
+
+    ($ W G C)
+    ($ W G $)  LOSE
+    ($ $ G C)  LOSE
+    ($ W $ C)
+    ($ $ $ C)
+    ($ $ G $)
+    ($ W $ $)
+
+    ($ $ $ $) GOAL
+
+    functions will be
+    east-wolf  send the wolf across the river
+    westwolf  bring the wolf back
+    no$move where the farmer moves across and brings nothing with him/her
+
+    there must be a condition where you can only do a west move after doing an east move
+    if should be impossible to do two east or two west moves in a row
+
+    if (first node) == 1 then able to perform east move
+    if (first node) == 2 then able to perform west move
+
+    Starting State (1 W G C) or (F W G C)
+    After one move (2 W $ C)    ($ W $ C)
+    After a second move (1 W $ C)
+
+    this condition will have to be in all the functions
+
+
+
+=========================================================================================================
+=========================================================================================================
+Water Gallon State Space
+
+      List with two elements that represent # of gallons in the jug
+      (0 0)
+      For consistency
+        1st element $ 5 gallon limit
+        2nd element $ 3 gallon limit
+      Functions
+        Refill 3
+        Refill 5
+        Dump 3
+        Dump 5
+        Pour 3 into 5
+        Pour 5 into 3
+
+      Goal state (4 x) where X is any number between 0$3
+
+=========================================================================================================
+=========================================================================================================
+8-puzzle State Space
+
+      Represent it as one long list (1 2 3 $ 4 5 6 7 8)
+      " $ " is the blank spot
+      Functions
+        Move tile down  +3 spots
+        Move tile up    -3 spots
+        Move tile right +1 spot
+        Move tile left  -1 spot

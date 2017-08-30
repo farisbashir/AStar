@@ -1,28 +1,29 @@
-*************************************************
 Zachary Heth
 Professor Binsted
-Homework 3
-Part C Answers
-*************************************************
+Homework 2
+Part C
 
-Linear-Conflict Heuristic
-    This is an extenstion of the Manhattan Distance Heursitic.
-    Let's say we have 3 tiles, X Y G, all in the same line (row or column).
-    The goal state position for X is where G currently is.
-    Since Y is in the way of tile X, there must be at least an additional 2 moves to get X to G.
-    The heuristic is calculated for all numbered tiles, and then added to the regular Manhattan Distance Heuristic.
-    This gives a number closer to the actual cost, but is still an underestimate, which means it is admissable.
+Farmer, Wolf, Goat, Cabbage
+Strategy:
+	The losing conditions are the wolf being left alone with the cabbage and the goat being left alone with the cabbage. Therefore the Farmer should only cross river so that the side he leaves behind is not in a losing state. That means the first move must be to bring the goat across, (or cross alone, but the farmer will just have to cross back). After the goat, either the wolf or cabbage can cross. After the farmer brings the wolf/cabbage, he must bring the goat with him back to the start, or else the goat will be alone with the wolf/cabbage. Then the farmer can cross with the cabbage/wolf to the goal side, come back and get the goat.	
 
-Performance Comparison
-    Manhattan Distance
-      This heuristic is able to solve the same puzzles in less time than the default heuristic.
-      It evaluated about 1/5 the number of nodes than the default heuristic did, in the hard example.
-      It is more informed than the default heuristic because it gives a more accurate lower bound on the number of moves it will take to solve the puzzle.
-      The default heuristic only gives how many tiles are out of place, and says nothing about how many moves it might take to reach the goal state
-    Linear-Conflict
-      It significantly reduced the amount of time it took to solve the 8-puzzles.
-      When solving the hard puzzle, it evaluated about 1/2 the number of nodes compared to the Manhattan Distance,
-      and 1/9 of the number of nodes compared to the default heuristic. It is the fastest of the 3.
-      This makes sense because it is simply an improved version of the Manhattan Distance Heurisitc
-    For all 3 of my heuristics, testing an impossible puzzle resulted in a stack overflow.
-    With a depth of 20, the openlist grows far to huge to evaluate everything.
+Number of States: 
+	Each character (farmer, wolf…) can be in one of two positions, the initial side of the river or the goal side. Since there are four characters, since there are four characters the number of possible states is 2^4 = 16 states	
+
+Water Jugs
+Strategy
+	Only the 5 gallon jug can hold the amount of water for the goal state (4 gallons). This means the last move will involve pouring water out of the 5 gallon jug, or pouring 3 gallons into the 5 gallon jug with 1 gallon already inside. Going with the first strategy, 
+	To reach 4 gallons, 1 gallon must be removed from the 5 gallon jug. To measure out exactly 1 gallon, the 3 gallon jug should be holding 2 gallons of water. It is possible to measure 2 gallons of water by pouring out from a full 5 gallon jug into the 3 gallon jug. There will be 2 gallons remaining in the 5 gallon jug. Then the 3 gallon jug can be emptied, and the 2 gallons poured into the 3 gallon jug.
+
+Number of States:
+	The 5 gallon jug has 6 states, and the 3 gallon jug has 4 states (must include 0). This means there are a total of 
+	6 * 4 = 24 states
+
+8-puzzle (I refer to numbers as “tiles”, sorry)
+Strategy: 
+	We want to move each tile into the correct position in the minimum number of moves. A greedy strategy might involve taking the most direct path for a tile that is out of place, to the correct position. For subsequent moves, it would be best to try and move tiles, without interfering with tiles already in the correct position. If there is no other choice, then we can ensure that tiles make it back to their original position by moving groups together. Tiles can be moved by rotating in a clockwise or counterclockwise pattern. When a rotation is complete, tiles should be back where they started. However, tiles that are not a part of the rotation can be swapped in for another one. This means that out of place tiles can be put into the correct position without interfering with tiles already in the correct position.
+
+Number of States:
+	All nine tiles (1-8 and the blank tile) can be in any of the nine positions
+	Thus the number of possible states is =
+	9! = 362880 states
